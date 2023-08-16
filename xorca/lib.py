@@ -492,7 +492,7 @@ def load_xorca_dataset_auto(data_files=None, aux_files=None, decode_cf=True,
     for af, ac in zip(aux_files, _aux_files_chunks):
         aux_ds.update(
             rename_dims(_open_dataset_or_zarr(
-                af, decode_cf=False, chunks=ac
+                af, decode_cf=decode_cf, chunks=ac
             ))
         )
     

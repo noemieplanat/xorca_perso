@@ -384,12 +384,12 @@ def load_xorca_dataset(data_files=None, aux_files=None, decode_cf=True,
     # distributed performance.
     _aux_files_chunks = map(
         lambda af: get_all_compatible_chunk_sizes(
-            input_ds_chunks, xr.open_dataset(af, decode_cf=decode_cf)),
+            input_ds_chunks, xr.open_dataset(af, decode_cf=False)),
         aux_files)
     aux_ds = xr.Dataset()
     for af, ac in zip(aux_files, _aux_files_chunks):
         aux_ds.update(
-            rename_dims(xr.open_dataset(af, decode_cf=decode_cf,
+            rename_dims(xr.open_dataset(af, decode_cf=False,
                                         chunks=ac)))
     # Again, we first have to open all data sets to filter the input chunks.
     _data_files_chunks = map(
@@ -486,13 +486,13 @@ def load_xorca_dataset_auto(data_files=None, aux_files=None, decode_cf=True,
     # distributed performance.
     _aux_files_chunks = map(
         lambda af: get_all_compatible_chunk_sizes(
-            input_ds_chunks, _open_dataset_or_zarr(af, decode_cf=decode_cf)),
+            input_ds_chunks, _open_dataset_or_zarr(af, decode_cf=False)),
         aux_files)
     aux_ds = xr.Dataset()
     for af, ac in zip(aux_files, _aux_files_chunks):
         aux_ds.update(
             rename_dims(_open_dataset_or_zarr(
-                af, decode_cf=decode_cf, chunks=ac
+                af, decode_cf=False, chunks=ac
             ))
         )
     
